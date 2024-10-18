@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아픈 곳 선택 - 간편한 질병 진단 서비스</title>
+    <style>
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Pretendard-Regular';
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .area-btn {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f1f3f4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .area-btn img {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+        }
+
+        .area-btn.selected {
+            background-color: #4285f4;
+            color: white;
+        }
+
+        .next-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 28px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .next-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>아픈 곳 또는 증상을 선택해 주세요</h1>
+    <button class="area-btn" data-target="눈_건조">
+        눈이 건조한 느낌이 남
+    </button>
+    <button class="area-btn" data-target="눈_떨림">
+        눈이 떨림
+    </button>
+    <button class="area-btn" data-target="눈_시야_흐림">
+        시야가 흐려짐
+    </button>
+    <button class="area-btn" data-target="눈_가려움">
+        눈이 가려움
+    </button>
+    <button class="area-btn" data-target="눈_통증">
+        통증이 느껴짐
+    </button>
+    <button class="next-btn" disabled>다음으로</button>
+
+    <script>
+        const areaButtons = document.querySelectorAll('.area-btn');
+        const nextButton = document.querySelector('.next-btn');
+        let selectedAreas = [];
+
+        areaButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('selected');
+
+                const target = button.dataset.target;
+                if (selectedAreas.includes(target)) {
+                    selectedAreas = selectedAreas.filter(area => area !== target);
+                } else {
+                    selectedAreas.push(target);
+                }
+                nextButton.disabled = selectedAreas.length === 0;
+            });
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (selectedAreas.length > 0) {
+                const query = selectedAreas.map(area => `area=${area}`).join('&');
+                window.location.href = `next.html?${query}`;
+            }
+        });
+    </script>
+</body>
+
+</html>

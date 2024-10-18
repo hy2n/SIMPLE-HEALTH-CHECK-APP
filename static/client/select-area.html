@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아픈 곳 선택 - 간편한 질병 진단 서비스</title>
+    <style>
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Pretendard-Regular';
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .area-btn {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f1f3f4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .area-btn img {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+        }
+
+        .area-btn.selected {
+            background-color: #4285f4;
+            color: white;
+        }
+
+        .next-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 28px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .next-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>아픈 곳 또는 증상을 선택해 주세요</h1>
+    <button class="area-btn" data-target="eye.html">
+        <img src="./assets/eye.png" alt="눈">
+        눈
+    </button>
+    <button class="area-btn" data-target="tooth.html">
+        <img src="./assets/tooth.png" alt="치아">
+        이빨 또는 잇몸 등
+    </button>
+    <button class="area-btn" data-target="head.html">
+        <img src="./assets/head.png" alt="머리">
+        기침 또는 목감기 등
+    </button>
+    <button class="area-btn" data-target="stomach.html">
+        <img src="./assets/stomach.png" alt="복부">
+        복통, 오한, 두통 등
+    </button>
+    <button class="area-btn" data-target="skin.html"> <!-- data-target 수정 -->
+        <img src="./assets/skin.png" alt="피부">
+        두두러기, 타박상 등
+    </button>
+    <button class="area-btn" data-target="joint.html">
+        <img src="./assets/joint.png" alt="관절">
+        관절, 근육통 등
+    </button>
+    <button class="next-btn" disabled>다음으로</button>
+
+    <script>
+        const areaButtons = document.querySelectorAll('.area-btn');
+        const nextButton = document.querySelector('.next-btn');
+        let selectedArea = null;
+
+        areaButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                areaButtons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+                selectedArea = button.dataset.target;
+                nextButton.disabled = false;
+            });
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (selectedArea) {
+                window.location.href = selectedArea;
+            }
+        });
+    </script>
+</body>
+
+</html>
